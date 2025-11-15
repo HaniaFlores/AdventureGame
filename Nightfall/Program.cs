@@ -139,8 +139,8 @@ public class DialogueScene : SceneBase
 /// </summary>
 public class CombatScene : SceneBase
 {
-    // Basic enemy attributes (kept private; can be extended later).
-    private readonly int enemyHealth; // currently not used extensively; kept for extensibility
+    // Basic enemy attributes
+    private readonly int enemyHealth;   
     private readonly int enemyAttack;
     private readonly bool percentBasedEnemyAttack;
 
@@ -153,43 +153,59 @@ public class CombatScene : SceneBase
     }
 
     /// <summary>
-    /// Executes a single combat exchange (player hits; enemy hits),
-    /// then falls back to the default choice-application logic.
+    /// Executes a single combat exchange:
+    /// - Player hits; if enemy "dies", enemy deals 0 and you gain a Relic.
+    /// - Else enemy hits (flat OR percent, using union).
+    /// Then applies the selected choice via base.Apply().
     /// </summary>
     public override string Apply(GameState s, Choice selected)
     {
         // Compute player damage (simple demo: equal to Attack, minimum 1).
         int playerDamage = Math.Max(1, s.Stats.Attack);
 
-        // Union usage: Compute enemy damage either as a flat value or a percentage of current HP.
+        // Determine if the enemy would drop to 0 this round
+        int enemyRemaining = enemyHealth - playerDamage;
+
+        // Compute enemy damage using the union
         int enemyDamage;
         var dmg = new DamageUnion();
-        if (percentBasedEnemyAttack)
+
+        if (enemyRemaining <= 0)
         {
-            // Interpret overlapping bytes as Percent
-            dmg.Percent = 0.25f; // 25% of current health
-            enemyDamage = Math.Max(1, (int)Math.Floor(s.Stats.Health * dmg.Percent));
+            // Enemy "dies": deals 0, and we reward the player with a Relic once
+            enemyDamage = 0;
+            Console.WriteLine("\n— Combat Round —");
+            Console.WriteLine($"You strike for {playerDamage}. The shadow dissipates!");
+            Console.WriteLine("The fallen guardian leaves behind a Relic.");
+            s.Inventory.Add("Relic"); // reward for lethal hit
         }
         else
         {
-            // Interpret overlapping bytes as Flat
-            dmg.Flat = enemyAttack;
-            enemyDamage = dmg.Flat;
+            // Enemy is still alive: it hits back using either flat or percent damage
+            if (percentBasedEnemyAttack)
+            {
+                // Percent path (uses union Percent)
+                dmg.Percent = 0.25f; // 25% of current HP
+                enemyDamage = Math.Max(1, (int)Math.Floor(s.Stats.Health * dmg.Percent));
+            }
+            else
+            {
+                // Flat path (uses union Flat)
+                dmg.Flat = enemyAttack;
+                enemyDamage = dmg.Flat;
+            }
+
+            Console.WriteLine("\n— Combat Round —");
+            Console.WriteLine($"You strike for {playerDamage}. (Enemy HP ≈ {enemyRemaining})");
+            Console.WriteLine($"Enemy strikes for {enemyDamage}.");
         }
 
-        // Present combat feedback to the player.
-        Console.WriteLine("\n— Combat Round —");
-        Console.WriteLine($"You strike for {playerDamage}.");
-        Console.WriteLine($"Enemy strikes for {enemyDamage}.");
+        // Apply enemy damage to player
         s.Stats.Health -= enemyDamage;
-
-        // Conditional: if damage knocked the player out, game over.
         if (s.Stats.Health <= 0)
-        {
             return "lose";
-        }
 
-        // Proceed to apply the standard choice effects (e.g., HealthDelta, items, next scene).
+        // Then apply standard choice effects (health deltas, items, next scene)
         return base.Apply(s, selected);
     }
 }
@@ -199,7 +215,7 @@ public class CombatScene : SceneBase
 // ==========================
 public static class Program
 {
-    // Central registry of scenes keyed by ID. This makes adding/removing scenes trivial.
+    // Scene registry
     static readonly Dictionary<string, SceneBase> Scenes = new()
     {
         ["start"] = new DialogueScene(
@@ -211,61 +227,87 @@ public static class Program
                 new("B", "Go right toward the sound of water.", "river")
             }
         ),
+
         ["cabin"] = new DialogueScene(
             "cabin",
             "A small cabin with the door ajar. Enter (A) or search the yard (B)?",
             new()
             {
-                // Choice effects modify HP and inventory via the base Apply()
+                // GainItem used; HealthDelta used
                 new("A", "Enter the cabin (find bread + key).", "cave", HealthDelta:+2, GainItem:"Key"),
                 new("B", "Search the yard (thorns, find torch).", "cave", HealthDelta:-2, GainItem:"Torch")
             }
         ),
+
         ["river"] = new DialogueScene(
             "river",
             "A fast river blocks your way. Jump (A) or follow upstream (B)?",
             new()
             {
-                new("A", "Jump across (risky).", "cave", HealthDelta:-3),
+                // Jumping triggers a FLAT-damage combat (beast)
+                new("A", "Jump across (you rouse a river-beast!).", "beast", HealthDelta:0),
                 new("B", "Follow upstream to a shallow crossing.", "cave")
             }
         ),
+
+        // New combat scene demonstrating FLAT union branch
+        ["beast"] = new CombatScene(
+            "beast",
+            "A river-beast surfaces with a hiss!",
+            new()
+            {
+                // After the exchange, continue on your way to the cave
+                new("A", "Push forward toward the cave.", "cave")
+            },
+            enemyHealth: 4,   // low HP; often killed in one hit => get Relic
+            enemyAttack: 2,   // flat damage path used here
+            percentBased: false
+        ),
+
         ["cave"] = new DialogueScene(
             "cave",
             "At dusk, you reach a cave with a locked gate. Open (A) or camp (B)?",
             new()
             {
                 new("A", "Try to open the gate.", "gate"),
+                // Rest: small heal, but no item change here
                 new("B", "Camp outside to recover.", "cabin", HealthDelta:+1)
             }
         ),
-        // Combat scene to show inheritance + polymorphism + union usage.
+
+        // Combat scene demonstrating PERCENT union branch + LoseItem on forcing
         ["gate"] = new CombatScene(
             "gate",
             "A shadow guards the locked gate. You may try the key (A) or force the gate (B).",
             new()
             {
+                // Path A: requires Key (checked in main loop); if lethal, you still get Relic here
                 new("A", "Use the key if you have it (then proceed).", "win"),
-                new("B", "Force it open (you strain).", "maybe_lose", HealthDelta:-1)
+                // Path B: you drop your Torch while struggling (LoseItem used)
+                new("B", "Force it open (you strain and drop your Torch).", "maybe_lose", HealthDelta:-1, GainItem:null, LoseItem:"Torch")
             },
-            enemyHealth: 6,
-            enemyAttack: 2,
-            percentBased: true // Use percent-based damage to exercise the union path
+            enemyHealth: 6,    // tougher; percent damage stings if you're at high HP
+            enemyAttack: 2,    // not used when percentBased==true; kept for completeness
+            percentBased: true // use Percent path here (union.Percent)
         ),
+
         ["maybe_lose"] = new DialogueScene(
             "maybe_lose",
             "Pain shoots through your arms.",
             new()
             {
                 new("A", "Stagger back to the cabin.", "cabin"),
-                new("B", "Collapse where you stand.", "lose")
+                // Collapsing makes you drop the Key if you had it (LoseItem used again)
+                new("B", "Collapse where you stand (you drop your Key).", "lose", 0, null, "Key")
             }
         ),
+
         ["win"] = new DialogueScene(
             "win",
             "The key turns. The shrine glows. You win!",
             new()
         ),
+
         ["lose"] = new DialogueScene(
             "lose",
             "Darkness falls. Game over.",

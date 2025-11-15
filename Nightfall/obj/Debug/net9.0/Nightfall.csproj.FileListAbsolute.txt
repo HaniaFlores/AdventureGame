@@ -12,3 +12,4 @@ c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\refint\Nightfall
 c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.pdb
 c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.genruntimeconfig.cache
 c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\ref\Nightfall.dll
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.sourcelink.json
