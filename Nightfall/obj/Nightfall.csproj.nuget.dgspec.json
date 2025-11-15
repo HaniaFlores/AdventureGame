@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj": {}
+    "C:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj": {}
   },
   "projects": {
-    "c:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj": {
+    "C:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj",
+        "projectUniqueName": "C:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj",
         "projectName": "Nightfall",
-        "projectPath": "c:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj",
+        "projectPath": "C:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\Nightfall.csproj",
         "packagesPath": "C:\\Users\\hanni\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\obj\\",
+        "outputPath": "C:\\Users\\hanni\\Desktop\\AdventureGame\\Nightfall\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\hanni\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -234,8 +234,8 @@ public static class Program
             new()
             {
                 // GainItem used; HealthDelta used
-                new("A", "Enter the cabin (find bread + key).", "cave", HealthDelta:+2, GainItem:"Key"),
-                new("B", "Search the yard (thorns, find torch).", "cave", HealthDelta:-2, GainItem:"Torch")
+                new("A", "Enter the cabin.", "cave", HealthDelta:+2, GainItem:"Key"),
+                new("B", "Search the yard.", "cave", HealthDelta:-2, GainItem:"Torch")
             }
         ),
 
@@ -245,7 +245,7 @@ public static class Program
             new()
             {
                 // Jumping triggers a FLAT-damage combat (beast)
-                new("A", "Jump across (you rouse a river-beast!).", "beast", HealthDelta:0),
+                new("A", "Jump across.", "beast"),
                 new("B", "Follow upstream to a shallow crossing.", "cave")
             }
         ),
@@ -253,7 +253,7 @@ public static class Program
         // New combat scene demonstrating FLAT union branch
         ["beast"] = new CombatScene(
             "beast",
-            "A river-beast surfaces with a hiss!",
+            "A river-beast surfaces with a hiss! Will you fight or back away?",
             new()
             {
                 // After the exchange, continue on your way to the cave
@@ -282,9 +282,9 @@ public static class Program
             new()
             {
                 // Path A: requires Key (checked in main loop); if lethal, you still get Relic here
-                new("A", "Use the key if you have it (then proceed).", "win"),
+                new("A", "Use the key if you have it.", "win"),
                 // Path B: you drop your Torch while struggling (LoseItem used)
-                new("B", "Force it open (you strain and drop your Torch).", "maybe_lose", HealthDelta:-1, GainItem:null, LoseItem:"Torch")
+                new("B", "Force it open.", "maybe_lose", HealthDelta:-1, GainItem:null, LoseItem:"Torch")
             },
             enemyHealth: 6,    // tougher; percent damage stings if you're at high HP
             enemyAttack: 2,    // not used when percentBased==true; kept for completeness
@@ -298,7 +298,7 @@ public static class Program
             {
                 new("A", "Stagger back to the cabin.", "cabin"),
                 // Collapsing makes you drop the Key if you had it (LoseItem used again)
-                new("B", "Collapse where you stand (you drop your Key).", "lose", 0, null, "Key")
+                new("B", "Collapse where you stand.", "lose", 0, null, "Key")
             }
         ),
 
@@ -411,7 +411,7 @@ public static class Program
     /// </summary>
     static void Title()
     {
-        Console.WriteLine("=== Nightfall: Text Adventure (C# Requirements Edition) ===");
+        Console.WriteLine("=== Nightfall: Text Adventure ===");
         Console.WriteLine("Press Enter to begin...");
         Console.ReadLine();
         Console.Clear();
