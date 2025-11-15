@@ -6,7 +6,7 @@ Nightfall is a text adventure game where the player navigates scenes, makes choi
 
 I created this software to practice real-world fundamentals: variables, expressions, conditionals, loops, functions, classes, inheritance, structures, file I/O, and a union-like construct in C#.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://www.youtube.com/watch?v=elCeHnKuHb0)
 
 # Development Environment
 

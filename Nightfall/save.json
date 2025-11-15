@@ -1,11 +1,9 @@
 {
-  "CurrentScene": "cave",
+  "CurrentScene": "maybe_lose",
   "Stats": {
     "MaxHealth": 10,
-    "Health": 15,
+    "Health": 5,
     "Attack": 3
   },
-  "Inventory": [
-    "Key"
-  ]
+  "Inventory": []
 }
