@@ -23,3 +23,9 @@ I created this software to practice real-world fundamentals: variables, expressi
 * [JSON serialization and deserialization in .NET](https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview)
 * [File and Stream I/O](https://learn.microsoft.com/en-us/dotnet/standard/io/)
 * [Tutorial: Create a .NET console application using Visual Studio Code](https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code)
+
+# Future Work
+
+- Richer content tools: Externalize scenes to JSON for easy authoring and loading at startup.
+- Better UX: Command history, input shortcuts (1/2/3), and clearer prompts/hints.
+- Autosave & profiles: Optional autosave and multiple save slots.
