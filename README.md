@@ -2,7 +2,7 @@
 
 Nightfall: An Adventure Game
 
-Nightfall is a text adventure where the player navigates scenes, makes choices, manages health and inventory, and can save/load progress. The scene system is data-driven via a dictionary. A base SceneBase class provides shared behavior, while DialogueScene and CombatScene demonstrate inheritance and polymorphism. Player attributes are captured in a Stats struct, and a small union-style struct (DamageUnion) shows explicit memory layout. The program persists state to save.json using System.Text.Json.
+Nightfall is a text adventure game where the player navigates scenes, makes choices, manages health and inventory, and can save/load progress. The scene system is data-driven via a dictionary. A base SceneBase class provides shared behavior, while DialogueScene and CombatScene demonstrate inheritance and polymorphism. Player attributes are captured in a Stats struct, and a small union-style struct (DamageUnion) shows explicit memory layout. The program persists state to save.json using System.Text.Json.
 
 I created this software to practice real-world fundamentals: variables, expressions, conditionals, loops, functions, classes, inheritance, structures, file I/O, and a union-like construct in C#.
 
