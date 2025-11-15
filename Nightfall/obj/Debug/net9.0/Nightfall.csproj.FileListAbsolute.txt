@@ -1,0 +1,14 @@
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\bin\Debug\net9.0\Nightfall.exe
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\bin\Debug\net9.0\Nightfall.deps.json
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\bin\Debug\net9.0\Nightfall.runtimeconfig.json
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\bin\Debug\net9.0\Nightfall.dll
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\bin\Debug\net9.0\Nightfall.pdb
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.AssemblyInfoInputs.cache
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.AssemblyInfo.cs
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.csproj.CoreCompileInputs.cache
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.dll
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\refint\Nightfall.dll
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.pdb
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\Nightfall.genruntimeconfig.cache
+c:\Users\hanni\Desktop\AdventureGame\Nightfall\obj\Debug\net9.0\ref\Nightfall.dll
