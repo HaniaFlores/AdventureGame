@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Nightfall")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e00736b2f10a2f1d692a825eee0619e6e3927c3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e36c6221591ef58d50b5a4ca6d87d9921c7af37a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Nightfall")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nightfall")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

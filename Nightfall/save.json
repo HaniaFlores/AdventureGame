@@ -1,0 +1,11 @@
+{
+  "CurrentScene": "cave",
+  "Stats": {
+    "MaxHealth": 10,
+    "Health": 15,
+    "Attack": 3
+  },
+  "Inventory": [
+    "Key"
+  ]
+}

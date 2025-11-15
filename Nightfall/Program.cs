@@ -470,7 +470,14 @@ public static class Program
             Stats = s.Stats,
             Inventory = s.Inventory.ToArray()
         };
-        var json = JsonSerializer.Serialize(save, new JsonSerializerOptions { WriteIndented = true });
+
+        var opts = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            IncludeFields = true
+        };
+
+        var json = JsonSerializer.Serialize(save, opts);
 
         // WriteAllText creates or overwrites the file atomically for this small payload.
         File.WriteAllText("save.json", json);
@@ -481,25 +488,30 @@ public static class Program
     /// Returns true if load succeeded, false otherwise.
     /// </summary>
     static bool LoadGame(out GameState? state, out string? currentId)
+{
+    state = null;
+    currentId = null;
+
+    if (!File.Exists("save.json")) return false;
+
+    var json = File.ReadAllText("save.json");
+
+    var opts = new JsonSerializerOptions
     {
-        state = null;
-        currentId = null;
+        IncludeFields = true
+    };
 
-        // If there's no save file, fail gracefully.
-        if (!File.Exists("save.json")) return false;
+    var save = JsonSerializer.Deserialize<SaveData>(json, opts);
+    if (save is null) return false;
 
-        var json = File.ReadAllText("save.json");
-        var save = JsonSerializer.Deserialize<SaveData>(json);
-        if (save is null) return false;
-
-        state = new GameState
-        {
-            Stats = save.Stats,
-            Inventory = new HashSet<string>(save.Inventory ?? Array.Empty<string>())
-        };
-        currentId = save.CurrentScene ?? "start";
-        return true;
-    }
+    state = new GameState
+    {
+        Stats = save.Stats,
+        Inventory = new HashSet<string>(save.Inventory ?? Array.Empty<string>())
+    };
+    currentId = save.CurrentScene ?? "start";
+    return true;
+}
 
     /// <summary>
     /// Private DTO for persistence. Keeping it separate decouples
