@@ -55,7 +55,7 @@ public struct DamageUnion
 // ==========================
 
 /// <summary>
-/// Holds all mutable state for the current playthrough:
+/// Holds all mutable state for the current game session:
 /// player stats, inventory, and whether the game is over.
 /// </summary>
 public class GameState
